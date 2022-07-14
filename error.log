@@ -1,0 +1,5 @@
+error: 2022-06-30T15:11:18.641Z testing error
+error: 18:22:50 testing error
+error: 10:03:42 testing error
+error: 13:24:33 Actual text: Please enter credit card number, this field can't be empty
+Expected text: Please enter credit card number, this field can/t be empty
