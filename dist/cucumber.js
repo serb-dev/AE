@@ -1,5 +1,6 @@
 var common = [
     '--require ./dist/cucumber.js',
+    '--require ./dist/features/hooks.js',
     '--require ./dist/features/steps/*.js',
     '--publish-quiet',
 ];
