@@ -1,0 +1,11 @@
+FROM node:10.15-slim
+
+COPY . /app
+
+WORKDIR /app
+
+RUN npm install
+
+CMD [ "node", "app.js" ]
+
+EXPOSE 3000

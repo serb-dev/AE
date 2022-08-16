@@ -1,0 +1,95 @@
+info: 14:36:49 --------------- Start firefox browser session -----------------
+info: 14:36:50 I open American Eagle
+info: 14:37:03 waiting for load page
+info: 14:53:09 --------------- Start firefox browser session -----------------
+info: 14:53:09 I open American Eagle
+info: 14:53:28 waiting for load page
+info: 16:16:42 --------------- Start chrome browser session -----------------
+info: 16:16:47 I open American Eagle
+info: 16:16:56 waiting for load page
+info: 22:57:23 --------------- Start chrome browser session -----------------
+info: 22:57:24 I open American Eagle
+info: 22:57:30 waiting for load page
+info: 22:59:12 --------------- Start firefox browser session -----------------
+info: 22:59:13 I open American Eagle
+info: 22:59:37 waiting for load page
+info: 22:59:45 move mouse on menu item
+info: 22:59:49 click on "Men" item
+info: 22:59:53 I am on "Men" page
+info: 23:00:07 I reject modal window
+info: 23:00:14 Select an item
+info: 23:00:20 I open page with choosed stuff
+info: 23:00:23 selecting size
+info: 23:00:30 increase amount
+info: 23:00:33 decrease amount
+info: 23:00:40 add this to bag
+info: 23:00:44 click on "view bag" button
+info: 23:00:44 I am on bag page
+info: 23:00:48 I click on checkout button
+info: 23:00:56 I am on checkout page
+info: 23:00:59 I am typing email
+info: 17:02:30 --------------- Start chrome browser session -----------------
+info: 17:02:33 I open American Eagle
+info: 17:02:41 waiting for load page
+info: 17:02:52 move mouse on menu item
+info: 17:02:56 click on "Men" item
+info: 17:02:59 I am on "Men" page
+info: 17:03:07 I reject modal window
+info: 17:03:11 Select an item
+info: 17:03:17 I open page with choosed stuff
+info: 17:03:20 selecting size
+info: 17:03:25 increase amount
+info: 17:03:29 decrease amount
+info: 17:03:35 add this to bag
+info: 17:03:39 click on "view bag" button
+info: 17:03:39 I am on bag page
+info: 17:03:42 I click on checkout button
+info: 17:04:02 I am on checkout page
+info: 17:04:05 I am typing email
+info: 17:04:15 I am typing name
+info: 17:04:17 I am typing lastname
+info: 17:04:20 I am typing street
+info: 17:04:22 I am typing floor
+info: 17:04:26 I am typing city
+info: 17:04:28 I am choosing state
+info: 17:04:33 I am typing zip code
+info: 17:04:36 click on confirm button
+info: 17:04:42 I get errors
+info: 16:12:18 --------------- Start chrome browser session -----------------
+info: 16:12:21 Open minusrus page
+info: 16:12:25 By(css selector, .logo-text)
+info: 16:27:45 --------------- Start chrome browser session -----------------
+info: 16:27:47 Open minusrus page
+info: 16:27:59 За підтримки
+Сил Спеціальних Операцій
+info: 16:37:40 --------------- Start chrome browser session -----------------
+info: 16:37:40 Open minusrus page
+info: 16:37:44 За підтримки
+Сил Спеціальних Операцій
+info: 16:45:55 --------------- Start chrome browser session -----------------
+info: 16:45:56 Open minusrus page
+info: 16:45:59 За підтримки
+Сил Спеціальних Операцій
+info: 16:50:05 --------------- Start chrome browser session -----------------
+info: 16:50:06 Open minusrus page
+info: 16:50:10 За підтримки Сил Спеціальних Операцій
+info: 16:52:22 --------------- Start chrome browser session -----------------
+info: 16:52:23 Open minusrus page
+info: 16:52:27 За підтримки
+Сил Спеціальних Операцій
+info: 16:56:37 --------------- Start chrome browser session -----------------
+info: 16:56:38 Open minusrus page
+info: 16:56:41 За підтримки
+Сил Спеціальних Операцій
+info: 16:59:52 --------------- Start chrome browser session -----------------
+info: 16:59:53 Open minusrus page
+info: 16:59:57 За підтримки
+Сил Спеціальних Операцій
+info: 17:06:35 --------------- Start chrome browser session -----------------
+info: 17:06:35 Open minusrus page
+info: 17:06:39 За підтримки
+Сил Спеціальних Операцій
+info: 17:08:28 --------------- Start chrome browser session -----------------
+info: 17:08:28 Open minusrus page
+info: 17:08:32 За,підтримки
+Сил,Спеціальних,Операцій

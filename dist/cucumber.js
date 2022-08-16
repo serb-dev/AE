@@ -1,11 +1,11 @@
 var common = [
     '--require ./dist/cucumber.js',
-    '--require ./dist/features/hooks.js',
-    '--require ./dist/features/steps/*.js',
-    '--publish-quiet',
+    '--require ./dist/src/features/hooks.js',
+    '--require ./dist/src/features/steps/*.js',
+    '--publish-quiet'
 ];
 module.exports = {
-    default: common.join(' '),
+    default: common.join(' ')
 };
 require('module-alias/register');
 //# sourceMappingURL=cucumber.js.map

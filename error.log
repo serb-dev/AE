@@ -3,3 +3,24 @@ error: 18:22:50 testing error
 error: 10:03:42 testing error
 error: 13:24:33 Actual text: Please enter credit card number, this field can't be empty
 Expected text: Please enter credit card number, this field can/t be empty
+error: 17:39:26 text is not the same
+error: 17:42:41 text is not the same
+error: 17:48:52 text is not the same
+error: 19:42:20 text is not the same
+error: 19:45:25 text is not the same
+error: 20:13:19 text is not the same
+error: 20:14:55 text is not the same
+error: 10:05:02 text is not the same
+error: 10:07:42 text is not the same
+error: 10:15:47 text is not the same
+error: 17:53:39 no matches
+error: 13:42:12 no matches
+error: 13:44:58 no matches
+error: 13:47:49 no matches
+error: 13:47:58 no matches
+error: 13:12:47 error
+error: 14:29:41 error
+error: 14:34:55 error
+error: 14:46:37 error
+error: 15:07:37 error
+error: 16:43:20 error: not equal
