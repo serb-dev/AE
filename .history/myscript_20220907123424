@@ -1,0 +1,5 @@
+#!/bin/bash
+if echo $ -eq 0
+then node reporter/index.js
+echo "The user $user Exists"
+fi

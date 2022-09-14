@@ -1,0 +1,7 @@
+FROM ubuntu
+
+COPY . ./AE
+
+RUN apt-get install
+
+CMD [ "/bin/bash", "npm run Minusrus-Scenario"]

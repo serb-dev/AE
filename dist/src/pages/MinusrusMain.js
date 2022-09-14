@@ -10,18 +10,20 @@ const logger_1 = __importDefault(require("../logger/logger"));
 class MinusrusPage {
     constructor(driver) {
         this.url = 'https://www.minusrus.com/';
-        this.engBtn = selenium_webdriver_1.By.xpath('//a[@href="/en"]');
+        // language buttons
+        this.engBtn = selenium_webdriver_1.By.css('a[href="/en"]');
+        this.uaBtn = selenium_webdriver_1.By.className('languages__item current languages__item');
+        this.ruBtn = selenium_webdriver_1.By.css('a[href="/ru"]');
         this.logoText = selenium_webdriver_1.By.className('logo-text');
         this.dateLabel = selenium_webdriver_1.By.className('date__label');
         this.dateArrow = selenium_webdriver_1.By.className('control-btn');
-        this.lostOfPersonel = selenium_webdriver_1.By.xpath('//div[@class="card card_large"]/div/div[2]/span');
-        this.percentOfLosses = selenium_webdriver_1.By.className('percent__int large');
-        // private percentOfLosses: By = By.xpath('//div[@class="card card_large"]/div[2]/div[2]/div/div/div/div/div/span')
-        this.lostOfAircrafts = selenium_webdriver_1.By.xpath('//div[@class="card__container"]/div[4]/div[2]/span');
-        this.percentOfLossesAircrafts = selenium_webdriver_1.By.xpath('//div[@class="card__container"]/div[4]/div[3]/div[2]/div/div/div/div/div/span');
-        this.expectedTitleStr = 'За підтримки Сил Спеціальних Операцій';
-        this.intendetForInvasion = '190.000';
-        this.intendetAircraftsForInv = '330';
+        // private cards: By = By.css('div[class="card"]')
+        this.cards = selenium_webdriver_1.By.className('card');
+        this.dailyAmount = selenium_webdriver_1.By.css('span[class="card__amount-total"]');
+        this.cardTitle = selenium_webdriver_1.By.css('div[class="card__title"]');
+        this.totalPercentAmount = selenium_webdriver_1.By.className('percent__int');
+        this.statisticsTitle = selenium_webdriver_1.By.css('div[class="statistics__title"]');
+        this.totalNumberOfForces = selenium_webdriver_1.By.className('statistics__description');
         this.driver = driver;
     }
     async goToMinusrusPage() {
@@ -29,95 +31,127 @@ class MinusrusPage {
         await this.driver.manage().window().maximize();
         await this.driver.get(this.url);
     }
-    async checkingLanguage() {
-        const element = await this.driver.wait(selenium_webdriver_1.until.elementLocated(this.logoText), 10000);
-        const languageENG = await this.driver.wait(selenium_webdriver_1.until.elementLocated(this.engBtn), 10000);
-        const text = await element.getText();
-        const replacedStr = text.replace('\n', ' ');
+    async choosingLanguage(language) {
+        const languageToSelector = {
+            UA: this.uaBtn,
+            ENG: this.engBtn,
+            RU: this.ruBtn
+        };
+        const button = await this.driver.wait(selenium_webdriver_1.until.elementLocated(languageToSelector[language]), 10000);
+        await button.click();
+    }
+    async verifyingSelectedLanguage(language) {
+        const logoElement = await this.driver.wait(selenium_webdriver_1.until.elementLocated(this.logoText), 10000);
+        const logoText = await logoElement.getText();
+        const replacedLogoStr = logoText.replace('\n', ' ');
+        logger_1.default.info(replacedLogoStr);
         await (0, utils_1.delay)(3000);
-        if (replacedStr.includes(this.expectedTitleStr)) {
-            logger_1.default.info(replacedStr);
-            languageENG.click();
-        }
-        else {
-            logger_1.default.error('no matches');
-            throw new Error('no matches with title');
+        switch (language) {
+            case 'ENG':
+                if (replacedLogoStr !== 'With the support of the Special Operations Forces') {
+                    throw new Error(`Not any matches with ${replacedLogoStr}`);
+                }
+                break;
+            case 'RU':
+                if (replacedLogoStr !== 'При поддержке Сил Специальных Операций') {
+                    throw new Error(`Not any matches with ${replacedLogoStr}`);
+                }
+                break;
+            case 'UA':
+                if (replacedLogoStr !== 'За підтримки Сил Спеціальних Операцій') {
+                    throw new Error(`Not any matches with ${replacedLogoStr}`);
+                }
+                break;
+            default: throw new Error(`Not any matches with ${language}`);
         }
     }
-    async changeDate(expectedDate) {
+    async chooseDate(expectedDate) {
         await (0, utils_1.delay)(3000);
         logger_1.default.info(expectedDate);
-        const leftArrow = await this.driver.wait(selenium_webdriver_1.until.elementLocated(this.dateArrow), 1000);
-        let currentDate = await (0, utils_1.getCurrentDay)(this.driver, this.dateLabel);
+        const arrows = await this.driver.wait(selenium_webdriver_1.until.elementsLocated(this.dateArrow), 1000);
+        let currentDate = await this.getCurrentDay(this.driver, this.dateLabel);
         (0, utils_1.dateChecking)(expectedDate, currentDate);
+        const formatedCurrentDate = await this.changeStringToDATE(currentDate);
+        const formatedExpectedDate = await this.changeStringToDATE(expectedDate);
+        let arrowToClick;
+        if (formatedExpectedDate < formatedCurrentDate) {
+            arrowToClick = arrows[0];
+        }
+        else {
+            arrowToClick = arrows[1];
+        }
         while (expectedDate !== currentDate) {
-            leftArrow.click();
-            (0, utils_1.delay)(3000);
-            currentDate = await (0, utils_1.getCurrentDay)(this.driver, this.dateLabel);
+            await arrowToClick.click();
+            currentDate = await this.getCurrentDay(this.driver, this.dateLabel);
         }
     }
-    async testTaskSwitcher(expectedDate) {
+    async testTaskSwitcher(entity) {
+        const cardsElements = await this.driver.wait(selenium_webdriver_1.until.elementsLocated(this.cards));
+        let baseElement;
+        for (const cardElement of cardsElements) {
+            const text = await cardElement.getText();
+            if (text.includes(entity)) {
+                baseElement = cardElement;
+                break;
+            }
+        }
+        if (baseElement === undefined || baseElement === null) {
+            throw new Error(`Entity with name ${entity} not found`);
+        }
+        const cardTitleElement = await baseElement.findElement(this.cardTitle);
+        const cardTitleText = await cardTitleElement.getText();
+        const dailyAmountElement = await baseElement.findElement(this.dailyAmount);
+        const textAmount = await dailyAmountElement.getText();
+        const amount = textAmount.replace('~', '');
+        logger_1.default.info(`${cardTitleText}: ${amount}`);
         await (0, utils_1.delay)(3000);
-        switch (expectedDate) {
-            case '09.08.2022':
-                const percentOfLossesElement = await this.driver.wait(selenium_webdriver_1.until.elementLocated(this.percentOfLosses), 10000);
-                const percentOfLosses = await percentOfLossesElement.getText();
-                logger_1.default.info('get percent of losses from site: ' + percentOfLosses);
-                const calculationOfPersonalLosses = await this.calculationOfPersonalLosses();
-                logger_1.default.info(calculationOfPersonalLosses);
-                if (+percentOfLosses === calculationOfPersonalLosses) {
-                    logger_1.default.info('succes test with personal losses');
-                }
-                else {
-                    logger_1.default.error('error: not equal');
-                    throw new Error('error: not equal');
-                }
-                break;
-            case '06.08.2022':
-                const percentLossesAircraftElement = await this.driver.wait(selenium_webdriver_1.until.elementLocated(this.percentOfLossesAircrafts), 10000);
-                const totaPercentAircraftLosses = await percentLossesAircraftElement.getText();
-                logger_1.default.info('get daily percent of aircraft losses:' + totaPercentAircraftLosses);
-                const calculationOfAircraftlLosses = await this.calculationOfAircraftLosses();
-                logger_1.default.info(calculationOfAircraftlLosses);
-                if (+totaPercentAircraftLosses === calculationOfAircraftlLosses) {
-                    logger_1.default.info('succes test with aircraft losses');
-                }
-                else {
-                    logger_1.default.error('error: not equal');
-                    throw new Error('error: not equal');
-                }
-                break;
-            default:
-                logger_1.default.error('thre are no cases');
-                throw new Error('thre are no cases');
+        const statisticsTitle = await baseElement.findElement(this.statisticsTitle);
+        const percentTitle = await statisticsTitle.getText();
+        const percents = await baseElement.findElements(this.totalPercentAmount);
+        const percentString = await percents[1].getText();
+        const percent = +percentString;
+        logger_1.default.info(`${percentTitle}: ${percent}`);
+        const totalNumberOfForcesElements = await baseElement.findElements(this.totalNumberOfForces);
+        const totalNumberOfForcesElement = await totalNumberOfForcesElements[1].getText();
+        const totalNumberOfForcesArray = totalNumberOfForcesElement.split('\n');
+        const totalNumberOfForces = totalNumberOfForcesArray[0];
+        const totalNumberOfForcesString = totalNumberOfForcesArray[1];
+        const changedTotalNumberOfForces = totalNumberOfForces.replace('.', '');
+        logger_1.default.info(`${totalNumberOfForcesString}: ${changedTotalNumberOfForces}`);
+        const myCalculation = await this.calculatorOfPercent(amount, changedTotalNumberOfForces);
+        logger_1.default.info(myCalculation);
+        if (percent === myCalculation) {
+            logger_1.default.info('my calculation is equal site calculation');
+        }
+        else {
+            throw new Error(`${percent} is not equal to ${myCalculation}`);
         }
     }
     // private methods for calculating russian losses
-    async calculationOfPersonalLosses() {
-        const roundedLossesElement = await this.driver.wait(selenium_webdriver_1.until.elementLocated(this.lostOfPersonel), 10000);
-        const roundedLosses = await roundedLossesElement.getText();
-        const totalLosses = roundedLosses.slice(1, 7);
-        logger_1.default.info('get number of losses from site: ' + totalLosses);
-        const personalLosses = await this.calculatorOfPercent(totalLosses, this.intendetForInvasion);
-        return personalLosses;
+    async getCurrentDay(driver, dateLabel) {
+        const dateElement = driver.wait(selenium_webdriver_1.until.elementLocated(dateLabel), 10000);
+        const date = dateElement.getText();
+        return date;
     }
-    async calculationOfAircraftLosses() {
-        const dailyLossesAircraftsElement = await this.driver.wait(selenium_webdriver_1.until.elementLocated(this.lostOfAircrafts), 10000);
-        const dailyLossesAircraft = await dailyLossesAircraftsElement.getText();
-        logger_1.default.info('get daily number of aircraf losses:' + dailyLossesAircraft);
-        const aircraftLosses = await this.calculatorOfPercent(dailyLossesAircraft, this.intendetAircraftsForInv);
-        return aircraftLosses;
+    async changeStringToDATE(date) {
+        const splitedDate = date.split('.');
+        const reverrsedDate = splitedDate.reverse();
+        const formatedString = reverrsedDate.join('.');
+        const newDate = new Date(formatedString);
+        return newDate;
     }
     /**
      * method for calculating percent of losses
      *
      * @param daily string with day losses
-     * @param intended string with total amount
+     * @param total string with total amount
      * @returns number of percent
      */
-    async calculatorOfPercent(daily, intended) {
-        const totalNumber = +daily / +intended;
+    async calculatorOfPercent(daily, total) {
+        logger_1.default.info(`${+daily} ${+total}`);
+        const totalNumber = +daily / +total;
         const percent = totalNumber * 100;
+        logger_1.default.info(percent);
         const rounded = percent.toFixed(1);
         return +rounded;
     }

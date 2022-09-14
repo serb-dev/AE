@@ -1,0 +1,128 @@
+[
+  {
+    "description": "",
+    "elements": [
+      {
+        "description": "",
+        "id": "work-with-minusrus.com;working-with-minusrus.com",
+        "keyword": "Scenario",
+        "line": 4,
+        "name": "Working with minusrus.com",
+        "steps": [
+          {
+            "keyword": "Before",
+            "hidden": true,
+            "result": {
+              "status": "passed",
+              "duration": 1753000000
+            }
+          },
+          {
+            "arguments": [],
+            "keyword": "Given ",
+            "line": 5,
+            "name": "Open minusrus.com",
+            "match": {
+              "location": "dist\\src\\features\\steps\\minusrus-steps.js:5"
+            },
+            "result": {
+              "status": "passed",
+              "duration": 3252000000
+            }
+          },
+          {
+            "arguments": [],
+            "keyword": "When ",
+            "line": 6,
+            "name": "Choose \"UA\" language",
+            "match": {
+              "location": "dist\\src\\features\\steps\\minusrus-steps.js:9"
+            },
+            "result": {
+              "status": "passed",
+              "duration": 180000000
+            }
+          },
+          {
+            "arguments": [],
+            "keyword": "When ",
+            "line": 7,
+            "name": "Verify that selected language is \"UA\"",
+            "match": {
+              "location": "dist\\src\\features\\steps\\minusrus-steps.js:13"
+            },
+            "result": {
+              "status": "passed",
+              "duration": 3096000000
+            }
+          },
+          {
+            "arguments": [],
+            "keyword": "When ",
+            "line": 8,
+            "name": "Choose a \"20.08.2022\"",
+            "match": {
+              "location": "dist\\src\\features\\steps\\minusrus-steps.js:17"
+            },
+            "result": {
+              "status": "passed",
+              "duration": 5608000000
+            }
+          },
+          {
+            "arguments": [],
+            "keyword": "And ",
+            "line": 9,
+            "name": "Chose a \"28.08.2022\" day",
+            "match": {
+              "location": "dist\\src\\features\\steps\\minusrus-steps.js:21"
+            },
+            "result": {
+              "status": "passed",
+              "duration": 4044000000
+            }
+          },
+          {
+            "arguments": [],
+            "keyword": "Then ",
+            "line": 10,
+            "name": "Verify that intendent loss for \"Кораблі та катери\" entity calculated correctly",
+            "match": {
+              "location": "dist\\src\\features\\steps\\minusrus-steps.js:25"
+            },
+            "result": {
+              "status": "passed",
+              "duration": 3990000000
+            }
+          },
+          {
+            "keyword": "After",
+            "hidden": true,
+            "result": {
+              "status": "passed",
+              "duration": 0
+            }
+          }
+        ],
+        "tags": [
+          {
+            "name": "@minusrus",
+            "line": 1
+          }
+        ],
+        "type": "scenario"
+      }
+    ],
+    "id": "work-with-minusrus.com",
+    "line": 2,
+    "keyword": "Feature",
+    "name": "Work with minusrus.com",
+    "tags": [
+      {
+        "name": "@minusrus",
+        "line": 1
+      }
+    ],
+    "uri": "src\\features\\minusrusScenario.feature"
+  }
+]
